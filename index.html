@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+    <link rel="stylesheet" href="/Expand/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/layui/layui/css/layui.css">
+    <script src="/Expand/bootstrap/jquery-3.5.0.min.js"></script>
+    <script src="/Expand/bootstrap/bootstrap.min.js"></script>
+    <script src="/layui/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/Expand/my/MyCss.css">
+    <script src="/Expand/my/MyJs.js"></script>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-image: url("/Expand/img/login-background.jpg");
+            background-size: 100%;
+            background-position: content content;
+        }
+
+        .formn-box {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .input,
+        .btn {
+            width: 100%;
+        }
+
+        .input-box,
+        .btn-box,
+        .operation {
+            margin: 30px;
+            margin-bottom: 0px;
+            width: 300px;
+        }
+
+        .operation {
+            margin-top: 10px;
+        }
+
+        .ld_CheckBoxLabel {
+            margin-left: -7px;
+        }
+
+        .forgotPassword {
+            float: right;
+            display: inline-block;
+            margin-right: 5px;
+            transform: translateY(-18px);
+        }
+
+        .register-box {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .register {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="formn-box">
+        <div class="input-box">
+            <input type="text" class="input" id="UAccount" placeholder="账户">
+        </div>
+        <div class="input-box">
+            <input type="password" class="input" id="UPassword" placeholder="密码">
+        </div>
+        <div class="operation">
+            <div class="layui-form">
+                <input type="checkbox" title="记住我" id="saveData" lay-skin="primary">
+            </div>
+            <a href="#" class="forgotPassword">忘记密码</a>
+        </div>
+        <div class="btn-box">
+            <button class="btn ld_button_default" action="loginBtn">登陆</button>
+        </div>
+        <div class="register-box">
+            还没账号?<a href="register.html" class="register">立即注册</a>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        $(function () {
+            //获取cookie
+            var UAccount = getCookie("UAccount");
+            var UPassword = getCookie("UPassword");
+            $("#UAccount").val(UAccount);
+            $("#UPassword").val(UPassword);
+            var form = layui.form.render();
+        })
+
+        //登陆
+        $(`[action="loginBtn"]`).off("click").on("click", function () {
+            LoginEvent();
+        })
+        // 回车事件
+        $(document).on("keyup", function (e) {
+            if (e.key == "Enter") {
+                LoginEvent();
+            }
+        });
+
+        function LoginEvent() {
+            let UAccount_v = $("#UAccount").val();
+            let UPassword_v = $("#UPassword").val();
+            if (UAccount_v == "" || UPassword_v == "") {
+                layer.msg("还没输账号或密码呢猪头");
+                return;
+            }
+            var obj = {
+                "UAccount": UAccount_v,
+                "UPassword": UPassword_v
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://49.234.224.90:4396/User/User.asmx/Login",
+                data: JSON.stringify(obj),
+                dataType: "json",
+                contentType: "application/json",
+                beforeSend: function () { PageLoad("/Expand/img/load.svg"); },
+                success: function (r) {
+                    console.log(r);
+
+                    layer.msg(r.d.msg);
+                    if (r.d.code == 0) {
+                        addCookie(r.d.data.cookie.Name, r.d.data.cookie.Value, 0);
+                        if ($("#saveData").prop("checked")) {
+                            addCookie("UAccount", UAccount_v, 0);
+                            addCookie("UPassword", UPassword_v, 0);
+                        }
+                        window.location.href = "default.html";
+                    }
+                    else {
+                        $("#UPassword").val("");
+                    }
+                },
+                error: function (e) {
+                    if (e.statusText == "timeout") {
+                        layer.msg("连接超时");
+                    }
+                },
+                complete: function () { PageHideLoad(); },
+            })
+        }
+    </script>
+</body>
+
+</html>
