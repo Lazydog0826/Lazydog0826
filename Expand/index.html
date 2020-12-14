@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2083629_egnh9y5r0xw.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2131411_1rxyhwam6jr.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2182043_gcdjgusdxd9.css">
+
+
+    <script src="./bootstrap/jquery-3.5.0.min.js"></script>
+    <script src="./myDatepicker/myDatepicker.js"></script>
+    <link rel="stylesheet" href="./myDatepicker/myDatepicker.css">
+    <link rel="stylesheet" href="./my/MyCss.css">
+    <script src="./my/MyJs.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/at-ui-style/css/at.min.css">
+    <!-- 引入组件库 -->
+    <script src="//cdn.jsdelivr.net/npm/at-ui/dist/at.min.js"></script>
+
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            padding: 100px 100px;
+        }
+
+        .btn,
+        .input,
+        .ld_input_group_icon_after,
+        .ld_button_group,
+        .ld_input_group_text_before,
+        .box {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="btn ld_button_default">默认按钮</button>
+    <button class="btn ld_button_white">次要按钮</button>
+    <button class="btn ld_button_disabled">禁用按钮</button>
+    <button class="btn ld_button_success">成功按钮</button>
+    <button class="btn ld_button_dangerous">危险按钮</button>
+    <button class="btn ld_button_warning">警告按钮</button>
+
+    <!--  -->
+    <button class="btn iconBtn ld_button_icon"><i class="iconfont icon-changyongicon-"></i>带图标按钮</button>
+    <!--  -->
+    <button class="btn iconBtn ld_button_onlyIcon"><i class="iconfont icon-changyongicon-"></i></button>
+    <!--  -->
+    <button class="btn iconBtn ld_button_onlyIconRound"><i class="iconfont icon-changyongicon-"></i></button>
+    <!--  -->
+    <div class="ld_button_group">
+        <button class="btn ld_button_white">左</button>
+        <button class="btn ld_button_white">中</button>
+        <button class="btn ld_button_white">右</button>
+    </div>
+    <!--  -->
+    <input type="text" class="input" placeholder="文本框">
+    <!--  -->
+    <input type="number" class="input ld_input_money" placeholder="货币框">
+    <!--  -->
+    <input type="number" class="input ld_input_num" placeholder="纯数字框">
+    <!--  -->
+    <br>
+    <div class="ld_input_group_icon_after">
+        <input type="text" class="input" placeholder="带图标输入框(后)">
+        <i class="iconfont icon-chaxun"></i>
+    </div>
+    <!--  -->
+    <div class="ld_input_group_icon_before">
+        <input type="text" class="input" placeholder="带图标输入框(前)">
+        <i class="iconfont icon-chaxun"></i>
+    </div>
+    <!--  -->
+    <br>
+    <div class="ld_input_group_text_before">
+        <input type="text" class="input" placeholder="带文字输入框(前)">
+        <span>搜索</span>
+    </div>
+    <!--  -->
+    <div class="ld_input_group_text_after">
+        <input type="text" class="input" placeholder="带文字输入框(后)">
+        <span>搜索</span>
+    </div>
+    <!--  -->
+    <div class="ld_input_group_text_before">
+        <input type="text" class="input" placeholder="带文字输入框(前)">
+        <span>https://</span>
+    </div>
+    <!--  -->
+    <br>
+    <input type="text" class="input dl_input_date" placeholder="日期" onplay="true">
+    <!--  -->
+    <div class="box">
+        <div class="ld_input_group_icon_before">
+            <input type="text" class="input dl_input_date" placeholder="带图标输入框(前)">
+            <i class="iconfont icon-riqi"></i>
+        </div>
+    </div>
+    <!--  -->
+    <div class="box">
+        <input type="checkbox" class="ld_CheckBox" name="aih" id="chiF">
+        <label for="chiF" class="ld_CheckBoxLabel">
+            <svg>
+                <rect width="15" height="15">
+                </rect>
+                <line x1="3" y1="7" x2="7" y2="11" />
+                <line x1="6" y1="11" x2="12" y2="3" />
+            </svg>
+            <span>吃饭</span>
+        </label>
+
+        <input type="checkbox" class="ld_CheckBox" name="aih" id="a">
+        <label for="a" class="ld_CheckBoxLabel">
+            <svg>
+                <rect width="15" height="15">
+                </rect>
+                <line x1="3" y1="7" x2="7" y2="11" />
+                <line x1="6" y1="11" x2="12" y2="3" />
+            </svg>
+            <span>睡觉</span>
+        </label>
+
+        <input type="checkbox" class="ld_CheckBox" name="aih" id="b">
+        <label for="b" class="ld_CheckBoxLabel">
+            <svg>
+                <rect width="15" height="15">
+                </rect>
+                <line x1="3" y1="7" x2="7" y2="11" />
+                <line x1="6" y1="11" x2="12" y2="3" />
+            </svg>
+            <span>打豆豆</span>
+        </label>
+    </div>
+    <!--  -->
+    <div class="box">
+        <label class="ld_RadioLabel"><input type="radio" name="sex" class="ld_RadioBtn"><span>男</span></label>
+        <label class="ld_RadioLabel"><input type="radio" name="sex" class="ld_RadioBtn"><span>女</span></label>
+    </div>
+
+    <!--  -->
+    <div class="pageindex">
+
+    </div>
+
+    <div class="promptBox">
+        <button class="btn ld_button_default">button</button>
+        <div class="prompt">
+            <span></span>
+            确定按钮
+        </div>
+    </div>
+    <!--  -->
+    <!-- AT_uiKit -->
+    <div style="height: 10px;"></div>
+    <div id="app">
+        <at-button @click="showMessage">AT-uiKit</at-button>
+    </div>
+    <br>
+    <br>
+    <div class="box" id="dropdown">
+        <at-dropdown>
+            <at-button size="small">下拉菜单 <i class="icon icon-chevron-down"></i></at-button>
+            <at-dropdown-menu slot="menu">
+                <at-dropdown-item>深圳</at-dropdown-item>
+                <at-dropdown-item>广州</at-dropdown-item>
+                <at-dropdown-item disabled>上海</at-dropdown-item>
+                <at-dropdown-item divided>北京</at-dropdown-item>
+                <at-dropdown-item>杭州</at-dropdown-item>
+            </at-dropdown-menu>
+        </at-dropdown>
+    </div>
+    <!--  -->
+
+    <table>
+        <thead>123</thead>
+        <tbody>123</tbody>
+        <tfoot>123</tfoot>
+    </table>
+</body>
+<script>
+    $(function () {
+        // 日期
+        $(".input.dl_input_date").myDatePicker({
+            "startDate": '2001-01-01', //不指定则取2014-01-01
+            "endDate": '2030-01-01',  //不指定则取当天
+            "parent": $("body"), //不指定则取body
+            "positionFixed": false, //定位方式
+            "view": 2 //默认为2  0-4五个数字分别表示 年、月、日、周、季度 五个视图
+        });
+        new Vue({
+            el: '#app',
+            methods: {
+                showMessage: function () {
+                    this.$Message("提示文本")
+                }
+            }
+        })
+        new Vue({
+            el: '#dropdown',
+            methods: {
+                trigger: "click",
+                showMessage: function () {
+                    this.$Message("提示文本")
+                }
+            }
+        })
+
+
+
+
+
+    });
+</script>
+
+</html>

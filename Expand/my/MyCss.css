@@ -1,0 +1,620 @@
+/* 媒体查询 */
+/* 超小设备（手机，小于 768px） */
+/* Bootstrap 中默认情况下没有媒体查询 */
+
+/* 小型设备（平板电脑，768px 起） */
+/* @media (min-width: @screen-sm-min) {
+  ...;
+} */
+
+/* 中型设备（台式电脑，992px 起） */
+/* @media (min-width: @screen-md-min) {
+  ...;
+} */
+
+/* 大型设备（大台式电脑，1200px 起） */
+/* @media (min-width: @screen-lg-min) {
+  ...;
+} */
+/* ============================================================================= */
+* {
+  padding: 0px;
+  margin: 0px;
+  /* user-select: none; */
+  outline: none !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* ============================================================================= */
+/* 按钮 */
+.btn {
+  padding: 0px 20px;
+  display: inline-block;
+  min-width: 82px;
+  height: 32px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  font-size: 10px;
+  line-height: 32px;
+  transition: background-color 0.5s;
+  -webkit-transition: background-color 0.5s;
+  -moz-transition: background-color 0.5s;
+  -ms-transition: background-color 0.5s;
+  -o-transition: background-color 0.5s;
+  user-select: none;
+}
+/* 1.默认按钮 */
+.btn.ld_button_default {
+  border: none;
+  background-color: #6190e8;
+  color: white;
+}
+.btn.ld_button_default:hover {
+  background-color: #79a1eb;
+}
+.btn.ld_button_default:active {
+  background-color: #4273ce;
+}
+/* 2.次要按钮 */
+.btn.ld_button_white {
+  border: 1px solid #c5d9e8;
+  background-color: #ffffff;
+  color: #6b6868;
+}
+.btn.ld_button_white:hover {
+  background-color: #f3f7fa;
+}
+.btn.ld_button_white:active {
+  background-color: #ebebeb;
+}
+/* 3.禁用按钮 */
+.btn.ld_button_disabled {
+  border: 1px solid #ececec;
+  background-color: #f7f7f7;
+  color: #d2d2d2;
+  cursor: not-allowed;
+}
+/* 4.成功按钮 */
+.btn.ld_button_success {
+  border: none;
+  background-color: #13ce66;
+  color: white;
+}
+.btn.ld_button_success:hover {
+  background-color: #24da76;
+}
+.btn.ld_button_success:active {
+  background-color: #19c968;
+}
+/* 5.危险按钮 */
+.btn.ld_button_dangerous {
+  border: none;
+  background-color: #ff4949;
+  color: white;
+}
+.btn.ld_button_dangerous:hover {
+  background-color: #fd6868;
+}
+.btn.ld_button_dangerous:active {
+  background-color: #fa3b3b;
+}
+/* 6.警告按钮 */
+.btn.ld_button_warning {
+  border: none;
+  background-color: #ffc82c;
+  color: white;
+}
+.btn.ld_button_warning:hover {
+  background-color: #f7cc59;
+}
+.btn.ld_button_warning:active {
+  background-color: #ddaf30;
+}
+/* 7.带图标按钮 */
+.btn.iconBtn.ld_button_icon {
+  border: 1px solid #c5d9e8;
+  color: #6b6868;
+  background-color: white;
+  padding-left: 42px;
+  position: relative;
+}
+.btn.iconBtn.ld_button_icon > i {
+  font-size: 17px;
+  display: inline-block;
+  position: absolute;
+  left: 20px;
+}
+.btn.iconBtn.ld_button_icon:hover {
+  background-color: #f3f7fa;
+}
+.btn.iconBtn.ld_button_icon:active {
+  background-color: #ebebeb;
+}
+
+/* 8.单图标按钮 */
+.btn.iconBtn.ld_button_onlyIcon {
+  border: 1px solid #c5d9e8;
+  color: #6b6868;
+  background-color: white;
+  line-height: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 32px;
+}
+.btn.iconBtn.ld_button_onlyIcon > i {
+  font-size: 17px;
+  display: inline-block;
+}
+.btn.iconBtn.ld_button_onlyIcon:hover {
+  background-color: #f3f7fa;
+}
+.btn.iconBtn.ld_button_onlyIcon:active {
+  background-color: #ebebeb;
+}
+/* 9.圆单图标 */
+.btn.iconBtn.ld_button_onlyIconRound {
+  padding: 0px;
+  width: 32px;
+  border-radius: 50%;
+  border: 1px solid #c5d9e8;
+  color: #6b6868;
+  background-color: white;
+  line-height: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 32px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  font-size: 10px;
+}
+.btn.iconBtn.ld_button_onlyIconRound > i {
+  font-size: 17px;
+  display: inline-block;
+}
+.btn.iconBtn.ld_button_onlyIconRound:hover {
+  background-color: #f3f7fa;
+}
+.btn.iconBtn.ld_button_onlyIconRound:active {
+  background-color: #ebebeb;
+}
+/* 10.多组按钮 */
+.ld_button_group {
+  height: 32px;
+  width: auto;
+}
+.ld_button_group .btn {
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-right: 0px;
+  margin: 0px;
+  float: left;
+}
+.ld_button_group .btn:first-of-type {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.ld_button_group .btn:last-of-type {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-right: 1px solid #c5d9e8;
+}
+/* ============================================================================= */
+/* 输入框 */
+.input {
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0px 10px;
+  border: transparent;
+  transition: all 0.5s;
+  font-size: 12px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  background-color: #cfd9ee;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  color: #2d2d2d;
+  box-sizing: border-box;
+  user-select: none;
+}
+/* 1.文本框 */
+/* .input.ld_input_text {
+} */
+/* 2.货币框 */
+.input.ld_input_money::-webkit-outer-spin-button,
+.input.ld_input_money::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+/* .input.ld_input_money {
+} */
+/* 3.纯数字框 */
+.input.ld_input_num::-webkit-outer-spin-button,
+.input.ld_input_num::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+/* .input.ld_input_num {
+} */
+/* 4.带图标输入框(后) */
+.ld_input_group_icon_after {
+  display: inline-block;
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+}
+.ld_input_group_icon_after > .input {
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  padding-right: 40px;
+  box-sizing: border-box;
+  float: left;
+  margin: 0px;
+}
+.ld_input_group_icon_after > i {
+  font-size: 20px;
+  position: absolute;
+  left: 170px;
+}
+/* 4.带图标输入框(前) */
+.ld_input_group_icon_before {
+  display: inline-block;
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+}
+.ld_input_group_icon_before > input {
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 40px;
+  box-sizing: border-box;
+  float: left;
+  margin: 0px;
+}
+.ld_input_group_icon_before > i {
+  font-size: 20px;
+  position: absolute;
+  left: 10px;
+}
+/* 5.带文字输入框(前) */
+.ld_input_group_text_before {
+  display: inline-block;
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+}
+.ld_input_group_text_before > input {
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 70px;
+  box-sizing: border-box;
+  float: left;
+  margin: 0px;
+}
+.ld_input_group_text_before > span {
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  font-size: 12px;
+  position: absolute;
+  left: 0px;
+  text-align: center;
+  background-color: #8caff5;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  user-select: none;
+}
+/* 6.带文字输入框(后) */
+.ld_input_group_text_after {
+  display: inline-block;
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+}
+.ld_input_group_text_after > input {
+  width: 200px;
+  height: 32px;
+  line-height: 32px;
+  padding-right: 70px;
+  box-sizing: border-box;
+  float: left;
+  margin: 0px;
+}
+.ld_input_group_text_after > span {
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  font-size: 12px;
+  position: absolute;
+  left: 140px;
+  text-align: center;
+  background-color: #8caff5;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  user-select: none;
+}
+/* 7.日期 */
+.input.dl_input_date {
+  /* user-select: none; */
+}
+/* ============================================================================= */
+/* 复选框 */
+.ld_CheckBoxLabel {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding: 2px 10px;
+  transition: all 0.5s;
+  border-radius: 4px;
+  user-select: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+.ld_CheckBoxLabel:hover {
+  background-color: rgba(241, 242, 246, 1);
+}
+.ld_CheckBoxLabel:hover rect {
+  stroke: rgba(112, 161, 255, 1);
+}
+.ld_CheckBoxLabel svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+}
+.ld_CheckBoxLabel svg rect {
+  fill: transparent;
+  stroke-width: 1px;
+  stroke: #cccccc;
+  transition: all 0.5s;
+}
+.ld_CheckBoxLabel svg line {
+  stroke-width: 2px;
+  stroke: white;
+  z-index: 5;
+  transition: all 2s;
+  width: 3px;
+  stroke-dasharray: 0, 100;
+}
+
+.ld_CheckBox {
+  -webkit-appearance: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0px;
+}
+
+.ld_CheckBoxLabel span {
+  display: inline-block;
+  position: relative;
+  margin-left: 20px;
+  line-height: 30px;
+  font-weight: 300;
+}
+.Checked {
+  animation: Checked 2s forwards;
+}
+.NoChecked {
+  animation: NoChecked 0s forwards;
+}
+
+@keyframes Checked {
+  0% {
+    stroke-dasharray: 0, 100;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+  }
+}
+@keyframes NoChecked {
+  0% {
+    stroke-dasharray: 100, 0;
+  }
+  100% {
+    stroke-dasharray: 0, 100;
+  }
+}
+/* ============================================================================= */
+
+/* 
+  * 单选框 
+*/
+.ld_RadioLabel {
+  display: inline-block;
+  height: 30px;
+  position: relative;
+  margin-right: 10px;
+  padding: 2px 10px;
+  transition: all 0.5s;
+  border-radius: 10px;
+  font-weight: 300;
+  user-select: none;
+}
+.ld_RadioLabel:hover {
+  background-color: rgba(241, 242, 246, 1);
+}
+.ld_RadioLabel:hover .ld_RadioBtn {
+  border-color: rgba(112, 161, 255, 1);
+}
+.ld_RadioLabel span {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 20px;
+}
+
+.ld_RadioBtn {
+  -webkit-appearance: none;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px solid #cccccc;
+  transition: border-color 0.5s;
+  -webkit-transition: border-color 0.5s;
+  -moz-transition: border-color 0.5s;
+  -ms-transition: border-color 0.5s;
+  -o-transition: border-color 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ld_RadioBtn::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background-color: rgba(112, 161, 255, 1);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transform: scale(0);
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+}
+.ld_RadioBtn:checked {
+  border-color: rgba(112, 161, 255, 1);
+}
+.ld_RadioBtn:checked::after {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+}
+/* ============================================================================= */
+/* 
+* 分页 
+*/
+.PageIndex {
+  margin-left: 100px;
+}
+.PageIndex ul li,
+.PageIndex ul i {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  margin-left: 10px;
+  transition: all 0.2s;
+  float: left;
+}
+.PageIndex ul li:hover,
+.PageIndex ul i:hover {
+  background-color: rgba(255, 121, 121, 0.5);
+  color: white;
+}
+.PageSelectIndex {
+  background-color: #ff7979;
+  color: white;
+}
+.PageIndex ul i {
+  font-size: 25px;
+}
+/* ============================================================================= */
+/* 加载控件 */
+.Load {
+  background-color: rgba(53, 59, 72, 1);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  z-index: 100;
+}
+.Load img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* ============================================================================= */
+/* 解析框 */
+.promptBox {
+  display: inline-block;
+  position: relative;
+  font-size: 12px;
+}
+.prompt {
+  pointer-events: none;
+  position: absolute;
+  top: -40px;
+  left: -20px;
+  width: 100px;
+  padding: 10px;
+  color: white;
+  background-color: #2d2d2d;
+  border-radius: 5px;
+  transform: scale(0.3);
+  opacity: 0;
+  transition: all 0.5s;
+  text-align: center;
+}
+.prompt span {
+  display: inline-block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 65%;
+  left: 30px;
+  transform: rotate(45deg) scale(0.3);
+  background-color: #2d2d2d;
+  opacity: 0;
+  transition: all 0.5s;
+  -webkit-clip-path: polygon(50% 0%, 0 100%, 100% 100%);
+  clip-path: polygon(50% 0%, 0 100%, 100% 100%);
+}
+.promptBox:hover .prompt {
+  transform: scale(1);
+  opacity: 1;
+}
+.promptBox:hover .prompt span {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
