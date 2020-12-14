@@ -72,7 +72,7 @@
 <body>
     <div class="formn-box">
         <div class="input-box">
-            <input type="text" class="input" id="UAccount" placeholder="账户">
+            <input type="text" class="input" id="UEmail" placeholder="邮箱">
         </div>
         <div class="input-box">
             <input type="password" class="input" id="UPassword" placeholder="密码">
@@ -97,9 +97,9 @@
     <script>
         $(function () {
             //获取cookie
-            var UAccount = getCookie("UAccount");
+            var UEmail = getCookie("UEmail");
             var UPassword = getCookie("UPassword");
-            $("#UAccount").val(UAccount);
+            $("#UEmail").val(UEmail);
             $("#UPassword").val(UPassword);
             var form = layui.form.render();
         })
@@ -116,14 +116,14 @@
         });
 
         function LoginEvent() {
-            let UAccount_v = $("#UAccount").val();
+            let UEmail_v = $("#UEmail").val();
             let UPassword_v = $("#UPassword").val();
-            if (UAccount_v == "" || UPassword_v == "") {
+            if (UEmail_v == "" || UPassword_v == "") {
                 layer.msg("还没输账号或密码呢猪头");
                 return;
             }
             var obj = {
-                "UAccount": UAccount_v,
+                "UEmail": UEmail_v,
                 "UPassword": UPassword_v
             }
             $.ajax({
@@ -140,7 +140,7 @@
                     if (r.d.code == 0) {
                         addCookie(r.d.data.cookie.Name, r.d.data.cookie.Value, 0);
                         if ($("#saveData").prop("checked")) {
-                            addCookie("UAccount", UAccount_v, 0);
+                            addCookie("UEmail", UEmail_v, 0);
                             addCookie("UPassword", UPassword_v, 0);
                         }
                         window.location.href = "default.html";

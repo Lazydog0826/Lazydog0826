@@ -61,13 +61,39 @@
         .register {
             cursor: pointer;
         }
+
+        .ld_input_group_text_after {
+            width: 100%;
+        }
+
+        .ld_input_group_text_after input {
+            width: 250px;
+        }
+
+        .ld_input_group_text_after span {
+            margin-left: 60px;
+            transition: all 0.5s;
+            cursor: pointer;
+            color: white;
+            width: 100px;
+        }
+
+        .ld_input_group_text_after span:hover {
+            background-color: #79A1EB;
+        }
     </style>
 </head>
 
 <body>
     <div class="formn-box">
         <div class="input-box">
-            <input type="text" class="input" id="UAccount" placeholder="账户">
+            <input type="text" class="input" id="UEmail" placeholder="邮箱">
+        </div>
+        <div class="input-box">
+            <div class="ld_input_group_text_after">
+                <input type="text" class="input" placeholder="验证码" id="VerificationCode">
+                <span action="GetVerificationCode">获取验证码</span>
+            </div>
         </div>
         <div class="input-box">
             <input type="password" class="input" id="UPassword" placeholder="密码">
@@ -75,6 +101,7 @@
         <div class="input-box">
             <input type="password" class="input" id="CheckPassword" placeholder="确定密码">
         </div>
+
         <div class="input-box">
             <input type="text" class="input" id="UProblem" placeholder="密保问题">
         </div>
@@ -92,6 +119,10 @@
     </div>
 
     <script>
+        var EmailCode;
+        var time = 60;
+        var Tim;
+        var IsOkCode = true;
 
         // 注册按钮
         $(`[action="register"]`).off("click").on("click", function () {
@@ -105,11 +136,11 @@
         });
         // 注册事件
         function RegisterEvent() {
-            let UAccount = $("#UAccount").val();
             let UPassword = $("#UPassword").val();
             let CheckPassword = $("#CheckPassword").val();
             let UProblem = $("#UProblem").val();
             let UAnswer = $("#UAnswer").val();
+            let UEmail = $("#UEmail").val();
             if (CheckPassword == "" && UPassword != "") {
                 layer.msg("请确认密码");
                 return;
@@ -119,7 +150,7 @@
                 return;
             }
 
-            if (UAccount == "" || UPassword == "" || UProblem == "" || UAnswer == "") {
+            if (UEmail == "" || UPassword == "" || UProblem == "" || UAnswer == "" || UEmail == "") {
                 layer.msg("信息不完整");
                 return;
             }
@@ -143,6 +174,51 @@
                 layer.msg("密码不一致");
             }
         });
+
+        //获取验证码
+        $(`[action="GetVerificationCode"]`).off("click").on("click", function () {
+            var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+            let UEmail = $("#UEmail").val();
+            if (!reg.test(UEmail)) {
+                layer.msg("请输入正确的邮箱地址");
+                return;
+            }
+            if (IsOkCode == false) {
+                layer.msg("请等待倒计时结束");
+                return;
+            }
+            var Parameter = {
+                "Email": UEmail
+            }
+            Tim = setInterval(() => {
+                time--;
+                $(`[action="GetVerificationCode"]`).text(time + "s");
+                if (time <= 0) {
+                    clearInterval(Tim);
+                    IsOkCode = true;
+                    time = 60;
+                    $(`[action="GetVerificationCode"]`).text("获取验证码");
+                }
+            }, 1000);
+            $.ajax({
+                type: "POST",
+                url: "http://49.234.224.90:4396/User/User.asmx/VerificationCode",
+                data: JSON.stringify(Parameter),
+                dataType: "json",
+                contentType: "application/json",
+                beforeSend: function () { PageLoad("/Expand/img/load.svg"); IsOkCode = false },
+                success: function (r) {
+                    layer.msg(r.d.msg);
+                    EmailCode = r.d.data.VerificationCode;
+                },
+                error: function (e) {
+                    if (e.statusText == "timeout") {
+                        layer.msg("连接超时");
+                    }
+                },
+                complete: function () { PageHideLoad(); },
+            })
+        })
     </script>
 
 
@@ -161,17 +237,23 @@
             // 机器验证弹框
             $(`[action="no"]`).off("click").on("click", function () {
                 layer.close(layer.index);
-                let UAccount = $("#UAccount").val();
+                let VerificationCode = $("#VerificationCode").val();
+                if (VerificationCode != EmailCode) {
+                    layer.msg("您的验证码有误");
+                    return;
+                }
                 let UPassword = $("#UPassword").val();
                 let CheckPassword = $("#CheckPassword").val();
                 let UProblem = $("#UProblem").val();
                 let UAnswer = $("#UAnswer").val();
+                let UEmail = $("#UEmail").val();
                 let u_mode = {
                     "u_mode": {
-                        "UAccount": UAccount,
+                        "UEmail": UEmail,
                         "UPassword": UPassword,
                         "UProblem": UProblem,
-                        "UAnswer": UAnswer
+                        "UAnswer": UAnswer,
+                        "UEmail": UEmail
                     }
                 }
                 $.ajax({
@@ -196,6 +278,7 @@
 
         </script>
     </template>
+
 </body>
 
 </html>
