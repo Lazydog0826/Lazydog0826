@@ -102,13 +102,6 @@
             <input type="password" class="input" id="CheckPassword" placeholder="确定密码">
         </div>
 
-        <div class="input-box">
-            <input type="text" class="input" id="UProblem" placeholder="密保问题">
-        </div>
-        <div class="input-box">
-            <input type="password" class="input" id="UAnswer" placeholder="密保答案">
-        </div>
-
 
         <div class="btn-box">
             <button class="btn ld_button_default" action="register">注册</button>
@@ -138,8 +131,6 @@
         function RegisterEvent() {
             let UPassword = $("#UPassword").val();
             let CheckPassword = $("#CheckPassword").val();
-            let UProblem = $("#UProblem").val();
-            let UAnswer = $("#UAnswer").val();
             let UEmail = $("#UEmail").val();
             if (CheckPassword == "" && UPassword != "") {
                 layer.msg("请确认密码");
@@ -150,7 +141,7 @@
                 return;
             }
 
-            if (UEmail == "" || UPassword == "" || UProblem == "" || UAnswer == "" || UEmail == "") {
+            if (UEmail == "" || UPassword == "") {
                 layer.msg("信息不完整");
                 return;
             }
@@ -190,16 +181,7 @@
             var Parameter = {
                 "Email": UEmail
             }
-            Tim = setInterval(() => {
-                time--;
-                $(`[action="GetVerificationCode"]`).text(time + "s");
-                if (time <= 0) {
-                    clearInterval(Tim);
-                    IsOkCode = true;
-                    time = 60;
-                    $(`[action="GetVerificationCode"]`).text("获取验证码");
-                }
-            }, 1000);
+
             $.ajax({
                 type: "POST",
                 url: "http://49.234.224.90:4396/User/User.asmx/VerificationCode",
@@ -216,7 +198,19 @@
                         layer.msg("连接超时");
                     }
                 },
-                complete: function () { PageHideLoad(); },
+                complete: function () {
+                    PageHideLoad();
+                    Tim = setInterval(() => {
+                        time--;
+                        $(`[action="GetVerificationCode"]`).text(time + "s");
+                        if (time <= 0) {
+                            clearInterval(Tim);
+                            IsOkCode = true;
+                            time = 60;
+                            $(`[action="GetVerificationCode"]`).text("获取验证码");
+                        }
+                    }, 1000);
+                },
             })
         })
     </script>
@@ -244,16 +238,11 @@
                 }
                 let UPassword = $("#UPassword").val();
                 let CheckPassword = $("#CheckPassword").val();
-                let UProblem = $("#UProblem").val();
-                let UAnswer = $("#UAnswer").val();
                 let UEmail = $("#UEmail").val();
                 let u_mode = {
                     "u_mode": {
                         "UEmail": UEmail,
                         "UPassword": UPassword,
-                        "UProblem": UProblem,
-                        "UAnswer": UAnswer,
-                        "UEmail": UEmail
                     }
                 }
                 $.ajax({

@@ -81,7 +81,7 @@
             <div class="layui-form">
                 <input type="checkbox" title="记住我" id="saveData" lay-skin="primary">
             </div>
-            <a href="#" class="forgotPassword">忘记密码</a>
+            <a href="#" class="forgotPassword" action="ForgotPassword">忘记密码</a>
         </div>
         <div class="btn-box">
             <button class="btn ld_button_default" action="loginBtn">登陆</button>
@@ -95,6 +95,13 @@
 
 
     <script>
+
+        var ResetEmail;
+        var time = 60;
+        var Tim;
+        var EmailCode;
+        var IsOkCode = true;
+
         $(function () {
             //获取cookie
             var UEmail = getCookie("UEmail");
@@ -115,6 +122,7 @@
             }
         });
 
+        // 登陆事件
         function LoginEvent() {
             let UEmail_v = $("#UEmail").val();
             let UPassword_v = $("#UPassword").val();
@@ -157,7 +165,202 @@
                 complete: function () { PageHideLoad(); },
             })
         }
+
+
+        // 忘记密码
+        $(`[action="ForgotPassword"]`).off("click").on("click", function () {
+            layer.open({
+                title: '重置密码'
+                , type: 1
+                , area: ['500px', '300px']
+                , content: $("#ForgotPassword_SelectEmail").html()
+            });
+
+        });
     </script>
+
+
+    <template id="ForgotPassword_SelectEmail">
+        <style>
+            .box {
+                width: 80%;
+                margin: 10px auto;
+            }
+
+            .ld_input_group_text_after {
+                width: 100%;
+            }
+
+            .ld_input_group_text_after input {
+                width: 250px;
+            }
+
+            .ld_input_group_text_after span {
+                margin-left: 60px;
+                transition: all 0.5s;
+                cursor: pointer;
+                color: white;
+                width: 100px;
+            }
+
+            .ld_input_group_text_after span:hover {
+                background-color: #79A1EB;
+            }
+        </style>
+        <div class="box">
+            <div class="input-box">
+                <input type="text" class="input" id="UEmail_reset" placeholder="邮箱">
+            </div>
+            <div class="input-box">
+                <div class="ld_input_group_text_after">
+                    <input type="text" class="input" placeholder="验证码" id="VerificationCode">
+                    <span action="GetVerificationCode">获取验证码</span>
+                </div>
+            </div>
+            <div class="input-box">
+                <button class="btn ld_button_default" action="ResetPassword">确定</button>
+            </div>
+        </div>
+
+        <script>
+            // 验证码
+            $(`[action="GetVerificationCode"]`).off("click").on("click", function () {
+                var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+                let UEmail = $("#UEmail_reset").val();
+                ResetEmail = UEmail;
+                if (!reg.test(UEmail)) {
+                    layer.msg("请输入正确的邮箱地址");
+                    return;
+                }
+                if (IsOkCode == false) {
+                    layer.msg("请等待倒计时结束");
+                    return;
+                }
+                var Parameter = {
+                    "Email": UEmail
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "http://49.234.224.90:4396/User/User.asmx/VerificationCode",
+                    data: JSON.stringify(Parameter),
+                    dataType: "json",
+                    contentType: "application/json",
+                    beforeSend: function () { PageLoad("/Expand/img/load.svg"); IsOkCode = false },
+                    success: function (r) {
+                        layer.msg(r.d.msg);
+                        EmailCode = r.d.data.VerificationCode;
+                    },
+                    error: function (e) {
+                        if (e.statusText == "timeout") {
+                            layer.msg("连接超时");
+                        }
+                    },
+                    complete: function () {
+                        PageHideLoad();
+                        Tim = setInterval(() => {
+                            time--;
+                            $(`[action="GetVerificationCode"]`).text(time + "s");
+                            if (time <= 0) {
+                                clearInterval(Tim);
+                                IsOkCode = true;
+                                time = 60;
+                                $(`[action="GetVerificationCode"]`).text("获取验证码");
+                            }
+                        }, 1000);
+                    },
+                })
+            });
+            //确定重置
+            $(`[action="ResetPassword"]`).off("click").on("click", function () {
+                let Code = $("#VerificationCode").val();
+                if (Code != EmailCode) {
+                    layer.msg("验证码有误");
+                    return;
+                }
+                layer.open({
+                    title: '重置密码'
+                    , type: 1
+                    , area: ['500px', '300px']
+                    , content: $("#ResetPasswordCheck").html()
+                });
+            });
+
+        </script>
+    </template>
+
+    <template id="ResetPasswordCheck">
+        <style>
+            .box {
+                width: 80%;
+                margin: 10px auto;
+            }
+        </style>
+        <div class="box">
+            <div class="input-box">
+                <input type="password" class="input" id="Password" placeholder="新的密码">
+            </div>
+            <div class="input-box">
+                <input type="password" class="input" id="CheckPassword" placeholder="确定密码">
+            </div>
+            <div class="input-box">
+                <button class="btn ld_button_default" action="ResetPasswordBtn">确定重置</button>
+            </div>
+        </div>
+        <script>
+            $("#CheckPassword").focusout(function () {
+                let Password = $("#Password").val();
+                let CheckPassword = $("#CheckPassword").val();
+                if (Password != CheckPassword) {
+                    layer.msg("请确认密码");
+                    return;
+                }
+            });
+
+            // 确认重置事件
+            $(`[action="ResetPasswordBtn"]`).off("click").on("click", function () {
+                let Password = $("#Password").val();
+                let CheckPassword = $("#CheckPassword").val();
+                if (Password != CheckPassword) {
+                    layer.msg("请确认密码");
+                    return;
+                }
+                let Parameter = {
+                    UEmail: ResetEmail,
+                    UPassword: Password
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "http://49.234.224.90:4396/User/User.asmx/ResetPassword",
+                    data: JSON.stringify(Parameter),
+                    dataType: "json",
+                    contentType: "application/json",
+                    beforeSend: function () { PageLoad("/Expand/img/load.svg"); IsOkCode = false },
+                    success: function (r) {
+                        layer.msg(r.d.msg);
+                        layer.closeAll();
+                    },
+                    error: function (e) {
+                        if (e.statusText == "timeout") {
+                            layer.msg("连接超时");
+                        }
+                    },
+                    complete: function () {
+                        PageHideLoad();
+                        Tim = setInterval(() => {
+                            time--;
+                            $(`[action="GetVerificationCode"]`).text(time + "s");
+                            if (time <= 0) {
+                                clearInterval(Tim);
+                                IsOkCode = true;
+                                time = 60;
+                                $(`[action="GetVerificationCode"]`).text("获取验证码");
+                            }
+                        }, 1000);
+                    },
+                })
+            });
+        </script>
+    </template>
 </body>
 
 </html>
