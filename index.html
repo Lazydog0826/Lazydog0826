@@ -136,14 +136,12 @@
             }
             $.ajax({
                 type: "POST",
-                url: "http://49.234.224.90:4396/User/User.asmx/Login",
+                url: "https://49.234.224.90:4396/User/User.asmx/Login",
                 data: JSON.stringify(obj),
                 dataType: "json",
                 contentType: "application/json",
                 beforeSend: function () { PageLoad("/Expand/img/load.svg"); },
                 success: function (r) {
-                    console.log(r);
-
                     layer.msg(r.d.msg);
                     if (r.d.code == 0) {
                         addCookie(r.d.data.cookie.Name, r.d.data.cookie.Value, 0);
@@ -241,7 +239,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "http://49.234.224.90:4396/User/User.asmx/VerificationCode",
+                    url: "https://49.234.224.90:4396/User/User.asmx/VerificationCode",
                     data: JSON.stringify(Parameter),
                     dataType: "json",
                     contentType: "application/json",
@@ -307,6 +305,9 @@
             </div>
         </div>
         <script>
+
+
+            // 确认密码框
             $("#CheckPassword").focusout(function () {
                 let Password = $("#Password").val();
                 let CheckPassword = $("#CheckPassword").val();
@@ -330,7 +331,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "http://49.234.224.90:4396/User/User.asmx/ResetPassword",
+                    url: "https://49.234.224.90:4396/User/User.asmx/ResetPassword",
                     data: JSON.stringify(Parameter),
                     dataType: "json",
                     contentType: "application/json",
