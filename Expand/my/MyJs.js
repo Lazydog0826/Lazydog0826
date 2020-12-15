@@ -1,69 +1,66 @@
 //检测浏览器是否开启开发者控制台
-// (function () {
-//     'use strict'
-//     var devtools = {
-//         open: false,
-//         orientation: null
-//     }
-//     var threshold = 160
-//     var emitEvent = function (state, orientation) {
-//         window.dispatchEvent(new CustomEvent('devtoolschange', {
-//             detail: {
-//                 open: state,
-//                 orientation: orientation
-//             }
-//         }))
-//     }
-//     setInterval(function () {
-//         var widthThreshold = window.outerWidth - window.innerWidth > threshold
-//         var heightThreshold = window.outerHeight - window.innerHeight > threshold
-//         var orientation = widthThreshold ? 'vertical' : 'horizontal'
+let LocationUrl = window.location.href;
+(function () {
+    'use strict'
+    var devtools = {
+        open: false,
+        orientation: null
+    }
+    var threshold = 160
+    var emitEvent = function (state, orientation) {
+        window.dispatchEvent(new CustomEvent('devtoolschange', {
+            detail: {
+                open: state,
+                orientation: orientation
+            }
+        }))
+    }
+    setInterval(function () {
+        var widthThreshold = window.outerWidth - window.innerWidth > threshold
+        var heightThreshold = window.outerHeight - window.innerHeight > threshold
+        var orientation = widthThreshold ? 'vertical' : 'horizontal'
 
-//         if (!(heightThreshold && widthThreshold) &&
-//             ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)) {
-//             if (!devtools.open || devtools.orientation !== orientation) {
-//                 emitEvent(true, orientation)
-//             }
-//             devtools.open = true
-//             devtools.orientation = orientation
-//         } else {
-//             if (devtools.open) {
-//                 emitEvent(false, null)
-//             }
-//             devtools.open = false
-//             devtools.orientation = null
-//         }
-//     }, 500)
-//     if (typeof module !== 'undefined' && module.exports) {
-//         module.exports = devtools
-//     } else {
-//         window.devtools = devtools
-//     }
-// })()
+        if (!(heightThreshold && widthThreshold) &&
+            ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)) {
+            if (!devtools.open || devtools.orientation !== orientation) {
+                emitEvent(true, orientation)
+            }
+            devtools.open = true
+            devtools.orientation = orientation
+        } else {
+            if (devtools.open) {
+                emitEvent(false, null)
+            }
+            devtools.open = false
+            devtools.orientation = null
+        }
+    }, 500)
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = devtools
+    } else {
+        window.devtools = devtools
+    }
+})()
 $(function () {
     //初始化所有复选框
     $("input[type=checkbox]").prop("checked", false);
-    //禁用右键菜单
-    // $(document).on("contextmenu", function () { return false; });
-    //禁用F12事件
-    // window.onkeydown = function (e) {
-    //     if (e.keyCode === 123) {
-    //         e.preventDefault()
-    //     }
-    // }
+    // 禁用右键菜单
+    $(document).on("contextmenu", function () { return false; });
+    // 禁用F12事件
+    window.onkeydown = function (e) {
+        if (e.keyCode === 123) {
+            e.preventDefault()
+        }
+    }
     // 检测浏览器是否开启开发者控制台
-    // window.addEventListener('devtoolschange', function (e) {
-    //     if (e.detail.open) {
-    //         PromptBoxShowAndHide(null, "您开启了开发者工具..", null, "gantan");
-    //         // $("body").css("display", "none");
-    //         setTimeout(() => {
-    //             $("body").css("display", "none");
-    //         }, 4000);
-    //     }
-    //     else {
-    //         $("body").css("display", "block");
-    //     }
-    // })
+    window.addEventListener('devtoolschange', function (e) {
+        if (e.detail.open) {
+            window.location = "about:blank";
+        }
+        else {
+            window.location = LocationUrl;
+        }
+    })
 
 
 })
