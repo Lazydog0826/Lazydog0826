@@ -101,7 +101,7 @@
         var Tim;
         var EmailCode;
         var IsOkCode = true;
-
+        var PopupLayer = [];
         $(function () {
             //获取cookie
             var UEmail = getCookie("UEmail");
@@ -118,7 +118,20 @@
         // 回车事件
         $(document).on("keyup", function (e) {
             if (e.key == "Enter") {
-                LoginEvent();
+                switch (PopupLayer.length) {
+                    case 0:
+                        $(`[action="loginBtn"]`).click();
+                        console.log(0);
+                        break;
+                    case 1:
+                        $(`[action="ResetPassword"]`).click();
+                        console.log(1);
+                        break;
+                    case 2:
+                        $(`[action="ResetPasswordBtn"]`).click();
+                        console.log(2);
+                        break;
+                }
             }
         });
 
@@ -172,8 +185,12 @@
                 , type: 1
                 , area: ['500px', '300px']
                 , content: $("#ForgotPassword_SelectEmail").html()
+                , end: function () {
+                    PopupLayer.splice(PopupLayer.length - 1, 1);
+                }
             });
-
+            PopupLayer.push(layer.index);
+            $(this).blur();
         });
     </script>
 
@@ -280,7 +297,12 @@
                     , type: 1
                     , area: ['500px', '300px']
                     , content: $("#ResetPasswordCheck").html()
+                    , end: function () {
+                        PopupLayer.splice(PopupLayer.length - 1, 1);
+                    }
                 });
+                PopupLayer.push(layer.index);
+                $(this).blur();
             });
 
         </script>
@@ -321,6 +343,10 @@
             $(`[action="ResetPasswordBtn"]`).off("click").on("click", function () {
                 let Password = $("#Password").val();
                 let CheckPassword = $("#CheckPassword").val();
+                if (Password == "") {
+                    layer.msg("请输入新密码");
+                    return;
+                }
                 if (Password != CheckPassword) {
                     layer.msg("请确认密码");
                     return;
@@ -337,8 +363,8 @@
                     contentType: "application/json",
                     beforeSend: function () { PageLoad("/Expand/img/load.svg"); IsOkCode = false },
                     success: function (r) {
-                        layer.msg(r.d.msg);
                         layer.closeAll();
+                        layer.msg(r.d.msg);
                     },
                     error: function (e) {
                         if (e.statusText == "timeout") {

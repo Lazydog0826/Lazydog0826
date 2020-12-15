@@ -116,6 +116,7 @@
         var time = 60;
         var Tim;
         var IsOkCode = true;
+        var PopupLayer = [];
 
         // 注册按钮
         $(`[action="register"]`).off("click").on("click", function () {
@@ -124,7 +125,14 @@
         // 回车事件
         $(document).on("keyup", function (e) {
             if (e.key == "Enter") {
-                RegisterEvent();
+                switch (PopupLayer.length) {
+                    case 0:
+                        $(`[action="register"]`).click();
+                        break;
+                    case 1:
+                        $(`[action="no"]`).click();
+                        break;
+                }
             }
         });
         // 注册事件
@@ -150,8 +158,12 @@
                 title: '验证'
                 , type: 1
                 , content: $("#validation").html()
+                , end: function () {
+                    PopupLayer.splice(PopupLayer.length - 1, 1)
+                }
             });
-
+            PopupLayer.push(layer.index);
+            $(this).blur();
         }
         // 确认密码框失去焦点事件
         $("#CheckPassword").on("focusout", function () {
