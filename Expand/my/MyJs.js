@@ -316,7 +316,8 @@ function PromptBoxShowAndHide(body, text, AnimationTime, type) {
 function PageLoad(imgPath) {
     var LoadBox = $("<div class=\"Load\"><img src=\"" + imgPath + "\"></div>");
     LoadBox.css({
-        "opacity": "0"
+        "opacity": "0",
+        "z-index": "99999999999"
     });
     $("body").append(LoadBox);
     LoadBox.animate({
